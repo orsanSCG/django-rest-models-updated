@@ -122,3 +122,10 @@ class OAuthToken(ApiAuthBase):
         if request.url != self.url_token:
             request.headers[str('Authorization')] = str("Bearer %s" % self.token.access_token)
         return request
+
+class RDFToken(ApiAuthBase):
+
+    def __call__(self, request):
+        self.token = self.settings_dict.get('OPTIONS', {}).get('TOKEN', '')
+        request.headers[str('Authorization')] = str("Token %s" % self.token)
+        return request
